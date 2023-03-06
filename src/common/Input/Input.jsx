@@ -1,11 +1,11 @@
 import React from 'react';
 
 interface InputProps {
-  label: string;
-  class: string;
-  value: string;
-  onChange: () => void;
-  placeholder: string;
+	label: string;
+	class: string;
+	value: string;
+	onChange: () => void;
+	placeholder: string;
 }
 
 const Input: React.FC<InputProps> = (props) => {
@@ -20,6 +20,6 @@ const Input: React.FC<InputProps> = (props) => {
 			/>
 		</React.Fragment>
 	);
-}
+};
 
 export default Input;

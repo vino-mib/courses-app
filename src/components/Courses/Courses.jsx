@@ -4,22 +4,21 @@ import CoursesProp from './Courses.model';
 import getAuthorNames from '../../helpers/getAuthorNames';
 
 const Courses: React.FC<CoursesProp> = (props) => {
-    const courseList = props.list;
-    return (
-        <React.Fragment>
-            {courseList.map((course, index) => (
-                <CourseCard 
-                    key={index}
-                    title={course.title}
-                    description={course.description}
-                    creationDate={course.creationDate}
-                    duration={course.duration}
-                    authors={getAuthorNames(course.authors)}
-                >
-                </CourseCard>
-            ))}
-        </React.Fragment>
-    );
-}
+	const courseList = props.list;
+	return (
+		<React.Fragment>
+			{courseList.map((course, index) => (
+				<CourseCard
+					key={index}
+					title={course.title}
+					description={course.description}
+					creationDate={course.creationDate}
+					duration={course.duration}
+					authors={getAuthorNames(course.authors)}
+				></CourseCard>
+			))}
+		</React.Fragment>
+	);
+};
 
 export default Courses;
