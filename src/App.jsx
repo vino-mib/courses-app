@@ -6,7 +6,6 @@ import SearchBar from './components/Courses/components/SearchBar/SearchBar.jsx';
 import Button from './common/Button/Button.jsx';
 import { mockedCoursesList } from './mock';
 import getAuthorNames from './helpers/getAuthorNames';
-import './App.css';
 
 const App = () => {
 	const [courses, setCourses] = useState(mockedCoursesList);
@@ -39,26 +38,25 @@ const App = () => {
 		<React.Fragment>
 			<Header></Header>
 			<div className='container-fluid'>
-			{
-				showCourses ? 
-				<React.Fragment>
-					<div className='row mt-md-3 mb-md-3'>
-						<div className='col-md-8'>
-							<SearchBar onSearch={onSearch} />
+				{showCourses ? (
+					<React.Fragment>
+						<div className='row mt-md-3 mb-md-3'>
+							<div className='col-md-8'>
+								<SearchBar onSearch={onSearch} />
+							</div>
+							<div className='col-md-4'>
+								<Button
+									class='btn btn-outline-primary float-right'
+									label='Add new course'
+									onClick={createNewCourse}
+								/>
+							</div>
 						</div>
-						<div className='col-md-4'>
-							<Button
-								class='btn btn-outline-primary float-right'
-								label='Add new course'
-								onClick={createNewCourse}
-							/>
-						</div>
-					</div>
-					<Courses list={courses} />
-				</React.Fragment>
-				:
-				<CreateCourse addCourse={addCourse} />
-			}
+						<Courses list={courses} />
+					</React.Fragment>
+				) : (
+					<CreateCourse addCourse={addCourse} />
+				)}
 			</div>
 		</React.Fragment>
 	);

@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import Input from '../../../../common/Input/Input';
 import Button from '../../../../common/Button/Button';
 
-interface SearchProps {handleSearch: (keyword: string) => {};
+interface SearchProps {
+	handleSearch: (keyword: string) => {};
 }
 
 const SearchBar: React.FC<SearchProps> = (props) => {
