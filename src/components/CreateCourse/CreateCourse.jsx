@@ -22,8 +22,6 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 	const [courseId, setCourseId] = useState(0);
 
 	const createCourse = () => {
-		console.log('create course');
-
 		let objectDate = new Date();
 		let day = objectDate.getDate();
 		let month = objectDate.getMonth();
@@ -48,55 +46,44 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 				duration: duration,
 				authors: courseAuthors.map((author) => author.id),
 			};
-			console.log(newCourse);
 			props.addCourse(newCourse);
 		} else {
 			alert('Please fill the require details');
 		}
 	};
 
-	const onTitleChange = (event) => {
-		console.log('on title change');
+	const handleTitleChange = (event) => {
 		setTitle(event.target.value);
 	};
 
-	const onDescriptionChange = (event) => {
-		console.log('on description change');
+	const handleDescriptionChange = (event) => {
 		setDescription(event.target.value);
 	};
 
-	const onAuthorNameChange = (event) => {
-		console.log('on author name change');
+	const handleAuthorNameChange = (event) => {
 		setAuthorName(event.target.value);
 	};
 
 	const createAuthor = () => {
-		console.log('create author');
 		const newId = id + 1;
 		setId(newId);
-		console.log(id);
 		const newAuthor = { id: newId, name: authorName };
 		authors.unshift(newAuthor);
 		setAuthors(authors);
 	};
 
-	const onDurationChange = (event) => {
-		console.log('on duration change');
+	const handleDurationChange = (event) => {
 		setDurationInHour(formatDuration(event.target.value));
 		setDuration(event.target.value);
 	};
 
-	const onAddAuthor = (selectedAuthor) => {
-		console.log('on add author');
-		console.log(selectedAuthor);
+	const addAuthor = (selectedAuthor) => {
 		setAuthors(authors.filter((author) => author.id !== selectedAuthor.id));
 		courseAuthors.unshift(selectedAuthor);
 		setCourseAuthors(courseAuthors);
 	};
 
-	const onRemoveCourseAuthor = (selectedAuthor) => {
-		console.log('on remove course author');
-		console.log(selectedAuthor);
+	const handleDeleteCourseAuthor = (selectedAuthor) => {
 		setCourseAuthors(
 			courseAuthors.filter((author) => author.id !== selectedAuthor.id)
 		);
@@ -109,17 +96,17 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 			<div className='row mt-md-3 mb-md-3'>
 				<div className='col-md-6'>
 					<div className='form-group'>
-						<label for='Title'>Title</label>
+						<label htmlFor='Title'>Title</label>
 						<Input
-							onChange={onTitleChange}
+							onChange={handleTitleChange}
 							placeholder={'Enter title'}
-							class='form-control'
+							className='form-control'
 						/>
 					</div>
 				</div>
 				<div className='col-md-6'>
 					<Button
-						class='btn btn-outline-primary float-right'
+						className='btn btn-outline-primary float-right'
 						label='Create course'
 						onClick={createCourse}
 					></Button>
@@ -129,10 +116,10 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 			<div className='row'>
 				<div className='col-md-12'>
 					<div className='form-group'>
-						<label for='Description'>Description</label>
+						<label htmlFor='Description'>Description</label>
 						<textarea
 							className='form-control'
-							onChange={onDescriptionChange}
+							onChange={handleDescriptionChange}
 							placeholder='Enter description'
 							rows='3'
 						></textarea>
@@ -149,17 +136,17 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 							</div>
 
 							<div className='form-group'>
-								<label for='Author name'>Author name</label>
+								<label htmlFor='Author name'>Author name</label>
 								<Input
-									onChange={onAuthorNameChange}
+									onChange={handleAuthorNameChange}
 									placeholder={'Enter author name'}
-									class='form-control'
+									className='form-control'
 								/>
 							</div>
 
 							<div className='mt-md-3 d-flex justify-content-center flex-nowrap'>
 								<Button
-									class='btn btn-outline-primary float-right'
+									className='btn btn-outline-primary float-right'
 									label='Create author'
 									onClick={createAuthor}
 								></Button>
@@ -170,11 +157,11 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 							</div>
 
 							<div className='form-group'>
-								<label for='Author name'>Duration</label>
+								<label htmlFor='Author name'>Duration</label>
 								<Input
-									onChange={onDurationChange}
+									onChange={handleDurationChange}
 									placeholder={'Enter duration'}
-									class='form-control'
+									className='form-control'
 									type={'number'}
 									min={0}
 								/>
@@ -192,7 +179,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 								authors.map((author, index) => (
 									<AuthorItem
 										key={index}
-										handleClick={onAddAuthor}
+										onClick={addAuthor}
 										author={author}
 										label={'Add author'}
 									/>
@@ -209,7 +196,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 								courseAuthors.map((author, index) => (
 									<AuthorItem
 										key={index}
-										handleClick={onRemoveCourseAuthor}
+										onClick={handleDeleteCourseAuthor}
 										author={author}
 										label={'Delete author'}
 									/>

@@ -9,14 +9,13 @@ interface Author {
 interface AuthorItemProps {
 	key: number;
 	author: Author;
-	handleClick: (author: Author) => {};
+	onClick: () => {};
 	label: string;
 }
 
 const AuthorItem: React.FC<AuthorItemProps> = (props) => {
-	const onButtonClick = () => {
-		console.log('on add author');
-		props.handleClick(props.author);
+	const handleClick = () => {
+		props.onClick(props.author);
 	};
 
 	return (
@@ -26,9 +25,9 @@ const AuthorItem: React.FC<AuthorItemProps> = (props) => {
 			</div>
 			<div className='col-md-6'>
 				<Button
-					onClick={onButtonClick}
+					onClick={handleClick}
 					label={props.label}
-					class='btn btn-outline-primary'
+					className='btn btn-outline-primary'
 				/>
 			</div>
 		</div>

@@ -7,7 +7,8 @@ const Courses: React.FC<CoursesProp> = (props) => {
 	const courseList = props.list;
 	return (
 		<React.Fragment>
-			{courseList.map((course, index) => (
+			{courseList.length  ? (
+				courseList.map((course, index) => (
 				<CourseCard
 					key={index}
 					title={course.title}
@@ -16,7 +17,9 @@ const Courses: React.FC<CoursesProp> = (props) => {
 					duration={course.duration}
 					authors={getAuthorNames(course.authors)}
 				></CourseCard>
-			))}
+			))) : (
+				<label>No Courses</label>
+			)}
 		</React.Fragment>
 	);
 };

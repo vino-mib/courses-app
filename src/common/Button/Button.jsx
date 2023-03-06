@@ -1,12 +1,12 @@
 interface ButtonProps {
 	label: string;
-	class: string;
+	className: string;
 	onClick: () => void;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
 	return (
-		<button className={props.class} onClick={props.onClick}>
+		<button className={props.className} onClick={props.onClick}>
 			{props.label}
 		</button>
 	);

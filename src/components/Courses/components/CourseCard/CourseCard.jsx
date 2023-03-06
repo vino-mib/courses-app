@@ -25,7 +25,7 @@ const CourseCard: React.FC<CourseCardProps> = (props) => {
 						<div className='mt-md-3 d-flex justify-content-center flex-nowrap'>
 							<Button
 								label='Show course'
-								class='btn btn-outline-primary'
+								className='btn btn-outline-primary'
 							></Button>
 						</div>
 					</div>

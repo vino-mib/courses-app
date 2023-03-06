@@ -11,7 +11,7 @@ const App = () => {
 	const [courses, setCourses] = useState(mockedCoursesList);
 	const [showCourses, setShowCourses] = useState(true);
 
-	const onSearch = (keyword) => {
+	const handleSearch = (keyword) => {
 		const result = mockedCoursesList.filter((course) => {
 			course = { ...course, authors: getAuthorNames(course.authors) };
 			return Object.values(course).some((val) =>
@@ -22,15 +22,12 @@ const App = () => {
 	};
 
 	const createNewCourse = () => {
-		console.log(showCourses);
 		setShowCourses(!showCourses);
 	};
 
 	const addCourse = (course) => {
-		console.log(course);
 		courses.unshift(course);
 		setShowCourses(courses);
-		console.log(courses);
 		setShowCourses(!showCourses);
 	};
 
@@ -42,11 +39,11 @@ const App = () => {
 					<React.Fragment>
 						<div className='row mt-md-3 mb-md-3'>
 							<div className='col-md-8'>
-								<SearchBar onSearch={onSearch} />
+								<SearchBar handleSearch={handleSearch} />
 							</div>
 							<div className='col-md-4'>
 								<Button
-									class='btn btn-outline-primary float-right'
+									className='btn btn-outline-primary float-right'
 									label='Add new course'
 									onClick={createNewCourse}
 								/>

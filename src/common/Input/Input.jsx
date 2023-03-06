@@ -2,7 +2,7 @@ import React from 'react';
 
 interface InputProps {
 	label: string;
-	class: string;
+	className: string;
 	value: string;
 	onChange: () => void;
 	placeholder: string;
@@ -14,7 +14,7 @@ const Input: React.FC<InputProps> = (props) => {
 			<input
 				value={props.value}
 				onChange={props.onChange}
-				className={props.class}
+				className={props.className}
 				placeholder={props.placeholder}
 				type={props.type ?? 'text'}
 			/>

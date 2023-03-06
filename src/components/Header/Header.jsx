@@ -10,7 +10,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 			<nav className='nav navbar-nav ml-auto my-md-0 mr-md-4'>
 				<div className='nav-item'>Vinoth</div>
 			</nav>
-			<Button label='Logout' class='btn btn-outline-primary'></Button>
+			<Button label='Logout' className='btn btn-outline-primary'></Button>
 		</nav>
 	);
 };
