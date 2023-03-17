@@ -1,9 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import Button from '../../../../common/Button/Button';
 import formatCreationDate from '../../../../helpers/formatCreationDate';
 import formatDuration from '../../../../helpers/getCourseDuration';
+import CourseProp from '../../Courses.model';
 import './CourseCard.css';
 
-const CourseCard: React.FC<CourseCardProps> = (props) => {
+const CourseCard: React.FC<CourseProp> = (props) => {
+	const navigate = useNavigate();
+	const handleClick = () => {
+		navigate(`/courses/${props.id}`);
+	};
 	return (
 		<div className='card mb-md-3'>
 			<div className='card-body'>
@@ -26,7 +32,8 @@ const CourseCard: React.FC<CourseCardProps> = (props) => {
 							<Button
 								label='Show course'
 								className='btn btn-outline-primary'
-							></Button>
+								onClick={handleClick}
+							/>
 						</div>
 					</div>
 				</div>

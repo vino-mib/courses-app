@@ -1,10 +1,8 @@
-import { mockedAuthorsList } from '../mock';
-
-const getAuthorNames = (authors) => {
+const getAuthorNames = (authorIds, authors) => {
 	let authorNames = '';
-	if (authors.length && mockedAuthorsList.length) {
-		const authorNameList = mockedAuthorsList.filter(
-			(author) => authors.indexOf(author.id) !== -1
+	if (authorIds && authors && authorIds.length && authors.length) {
+		const authorNameList = authors.filter(
+			(author) => authorIds.indexOf(author.id) !== -1
 		);
 
 		if (authorNameList.length) {

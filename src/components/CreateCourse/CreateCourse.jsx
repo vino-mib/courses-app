@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import { mockedAuthorsList } from '../../mock';
 import AuthorItem from './components/AuthorItem/AuthorItem';
 import formatDuration from '../../helpers/getCourseDuration';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface CreateCourseProps {
 	addCourse: () => {};
@@ -17,11 +18,26 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 	const [courseAuthors, setCourseAuthors] = useState([]);
 	const [duration, setDuration] = useState(0);
 	const [durationInHour, setDurationInHour] = useState('');
-
 	const [id, setId] = useState(0);
 	const [courseId, setCourseId] = useState(0);
 
-	const createCourse = () => {
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await fetch(`http://localhost:4000/authors/all`);
+			const result = await response.json();
+
+			console.log(result);
+
+			if (result && result.successful) {
+				setAuthors(result.result);
+			}
+		};
+		fetchData();
+	}, []);
+
+	const createCourse = async () => {
 		let objectDate = new Date();
 		let day = objectDate.getDate();
 		let month = objectDate.getMonth();
@@ -37,16 +53,25 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 		}
 
 		if (title && description && duration && courseAuthors.length) {
-			setCourseId(courseId + 1);
 			const newCourse = {
-				id: courseId,
 				title: title,
 				description: description,
-				creationDate: day + '.' + month + '.' + year,
 				duration: duration,
 				authors: courseAuthors.map((author) => author.id),
 			};
-			props.addCourse(newCourse);
+
+			const token = localStorage.getItem('token');
+
+			const response = await fetch('http://localhost:4000/courses/add', {
+				method: 'POST',
+				body: JSON.stringify(newCourse),
+				headers: {
+					Authorization: token,
+					'Content-Type': 'application/json',
+				},
+			});
+
+			navigate('/courses');
 		} else {
 			alert('Please fill the require details');
 		}
@@ -94,6 +119,11 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 	return (
 		<div>
 			<div className='row mt-md-3 mb-md-3'>
+				<div className='col-md-12'>
+					<Link to='/courses'>Back to courses</Link>
+				</div>
+			</div>
+			<div className='row mt-md-3 mb-md-3'>
 				<div className='col-md-6'>
 					<div className='form-group'>
 						<label htmlFor='Title'>Title</label>
@@ -109,7 +139,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 						className='btn btn-outline-primary float-right'
 						label='Create course'
 						onClick={createCourse}
-					></Button>
+					/>
 				</div>
 			</div>
 
@@ -122,7 +152,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 							onChange={handleDescriptionChange}
 							placeholder='Enter description'
 							rows='3'
-						></textarea>
+						/>
 					</div>
 				</div>
 			</div>
@@ -149,7 +179,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 									className='btn btn-outline-primary float-right'
 									label='Create author'
 									onClick={createAuthor}
-								></Button>
+								/>
 							</div>
 
 							<div className='mt-md-3 d-flex justify-content-center flex-nowrap'>
