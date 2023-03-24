@@ -18,7 +18,7 @@ const Input: React.FC<InputProps> = (props) => {
 			inputRef.current.focus();
 			setFocus(false);
 		}
-	}, [props]);
+	}, []);
 
 	return (
 		<React.Fragment>

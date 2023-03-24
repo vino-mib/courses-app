@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import { useAuth } from '../../helpers/auth';
+import { register } from '../../store/user/actions';
 
 const Login: React.FC<> = () => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState();
-	const [user, setUser] = useAuth();
 
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const user = useSelector((state) => state?.user);
+	console.log(user);
 
 	useEffect(() => {
-		const userInfo = JSON.parse(localStorage.getItem('user'));
-		if (userInfo) {
-			setUser(userInfo);
+		if (user?.isAuth) {
 			navigate('/courses');
 		}
 	}, []);
@@ -32,7 +35,20 @@ const Login: React.FC<> = () => {
 				password,
 			};
 
-			const response = await fetch('http://localhost:4000/register', {
+			dispatch(register(newUser))
+				.then((result) => {
+					setName('');
+					setEmail('');
+					setPassword('');
+					navigate('/login');
+					// window.location.reload();
+				})
+				.catch((result) => {
+					console.log(result);
+					setError(result.errors[0]);
+				});
+
+			/*const response = await fetch('http://localhost:4000/register', {
 				method: 'POST',
 				body: JSON.stringify(newUser),
 				headers: {
@@ -48,7 +64,7 @@ const Login: React.FC<> = () => {
 				navigate('/login');
 			} else {
 				setError(result.errors[0]);
-			}
+			}*/
 		}
 	};
 

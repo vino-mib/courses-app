@@ -1,33 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
-import { useAuth } from '../../helpers/auth';
+import { logout } from '../../store/user/actions';
 
 const Header: React.FC<HeaderProps> = (props) => {
 	const [token, setToken] = useState('');
-	const [user, setUser] = useAuth();
+	const [error, setError] = useState('');
 
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const user = useSelector((state) => state?.user);
+	console.log(user);
 
 	const handleLogut = async () => {
-		const token = localStorage.getItem('token');
-		const response = await fetch('http://localhost:4000/logout', {
-			method: 'DELETE',
-			headers: {
-				Authorization: token,
-				'Content-Type': 'application/json',
-			},
-		});
-
-		const result = await response.status;
-
-		if (result === 200 || result === 401) {
-			localStorage.removeItem('token');
-			localStorage.removeItem('user');
-			setUser(null);
-			navigate('/login');
-		}
+		dispatch(logout())
+			.then(() => {
+				navigate('/login');
+				// window.location.reload();
+			})
+			.catch((result) => {
+				console.log(result);
+				setError(result.result);
+			});
 	};
 
 	return (
@@ -35,7 +32,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 			<div className='navbar-brand'>
 				<Logo width='100' height='50'></Logo>
 			</div>
-			{user ? (
+			{user?.isAuth ? (
 				<>
 					<nav className='nav navbar-nav ml-auto my-md-0 mr-md-4'>
 						<div className='nav-item'>{user?.name}</div>

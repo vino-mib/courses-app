@@ -4,11 +4,26 @@ import formatCreationDate from '../../../../helpers/formatCreationDate';
 import formatDuration from '../../../../helpers/getCourseDuration';
 import CourseProp from '../../Courses.model';
 import './CourseCard.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCourse } from '../../../../store/courses/actions';
 
 const CourseCard: React.FC<CourseProp> = (props) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state?.user);
+	const isAdmin = user.role === 'admin' ? true : false;
+	console.log(user);
+
 	const handleClick = () => {
 		navigate(`/courses/${props.id}`);
+	};
+
+	const handleCourseUpdate = () => {
+		navigate(`/courses/update/${props.id}`);
+	};
+
+	const handleCourseDelete = () => {
+		dispatch(deleteCourse(props.id));
 	};
 	return (
 		<div className='card mb-md-3'>
@@ -31,9 +46,24 @@ const CourseCard: React.FC<CourseProp> = (props) => {
 						<div className='mt-md-3 d-flex justify-content-center flex-nowrap'>
 							<Button
 								label='Show course'
-								className='btn btn-outline-primary'
+								className='btn btn-outline-primary mr-2'
 								onClick={handleClick}
 							/>
+							{isAdmin ? (
+								<>
+									<Button
+										icon='edit'
+										className='btn btn-outline-primary mr-2'
+										onClick={handleCourseUpdate}
+									/>
+
+									<Button
+										icon='trash'
+										className='btn btn-outline-primary mr-2'
+										onClick={handleCourseDelete}
+									/>
+								</>
+							) : null}
 						</div>
 					</div>
 				</div>
