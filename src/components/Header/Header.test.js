@@ -18,15 +18,17 @@ jest.mock('react-router-dom', () => ({
 	useNavigate: () => mockedUsedNavigate,
 }));
 
+const mockedUser = {
+	isAuth: true,
+	name: 'admin',
+	email: 'admin@email.com',
+	role: 'admin',
+	token: '85aa767d-73c0-4e23-9a02-27902d418b37',
+};
+
 describe('Header', () => {
 	beforeEach(() => {
-		jest.spyOn(redux, 'useSelector').mockReturnValueOnce({
-			isAuth: true,
-			name: 'admin',
-			email: 'admin@email.com',
-			role: 'admin',
-			token: '85aa767d-73c0-4e23-9a02-27902d418b37',
-		});
+		jest.spyOn(redux, 'useSelector').mockReturnValueOnce(mockedUser);
 	});
 	it('should render correctly', () => {
 		render(<Header />);
