@@ -6,7 +6,7 @@ import * as redux from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import '@testing-library/jest-dom';
-import * as router from 'react-router'
+import * as router from 'react-router';
 
 jest.mock('react-redux', () => ({
 	...jest.requireActual('react-redux'),
@@ -20,7 +20,7 @@ jest.mock('react-router-dom', () => ({
 	useNavigate: () => mockedUsedNavigate,
 }));
 
-const mockCourses = [
+const mockedCourses = [
 	{
 		title: 'Javascript',
 		description:
@@ -44,27 +44,31 @@ const mockCourses = [
 	},
 ];
 
+const mockedAuthors = [
+	{
+		name: 'author',
+		id: '9b87e8b8-6ba5-40fc-a439-c4e30a373d36',
+	},
+	{
+		name: 'Hrish',
+		id: '6043a4a7-8221-4ede-bf52-c9deb8c9cf5d',
+	},
+];
+
+const mockedUser = {
+	isAuth: true,
+	name: 'Vinoth',
+	email: 'vino.mib@gmail.com',
+	token: 'token',
+	role: 'admin',
+};
+
 describe('Courses', () => {
 	beforeEach(() => {
 		jest.spyOn(redux, 'useSelector').mockReturnValueOnce({
-			courses: mockCourses,
-			authors: [
-				{
-					name: 'author',
-					id: '9b87e8b8-6ba5-40fc-a439-c4e30a373d36',
-				},
-				{
-					name: 'Hrish',
-					id: '6043a4a7-8221-4ede-bf52-c9deb8c9cf5d',
-				},
-			],
-			user: {
-				isAuth: true,
-				name: 'Vinoth',
-				email: 'vino.mib@gmail.com',
-				token: 'token',
-				role: 'admin',
-			},
+			courses: mockedCourses,
+			authors: mockedAuthors,
+			user: mockedUser,
 		});
 	});
 
@@ -76,16 +80,16 @@ describe('Courses', () => {
 	it('should display amount of Coursecard equal to the course count', async () => {
 		const component = await render(<Courses />);
 		const courseCards = component.getAllByTestId('course-card');
-		expect(courseCards.length).toEqual(mockCourses.length);
+		expect(courseCards.length).toEqual(mockedCourses.length);
 	});
 
 	it('should display course form after a click on button "Add new course"', async () => {
-        const component = await render(<Courses />);
+		const component = await render(<Courses />);
 		const addCourseButton = component.getByText('Add new course', {
 			selector: 'button',
 		});
 		expect(addCourseButton).toBeDefined();
 		await userEvent.click(addCourseButton);
-        expect(mockedUsedNavigate).toHaveBeenCalledWith('/courses/add');    
+		expect(mockedUsedNavigate).toHaveBeenCalledWith('/courses/add');
 	});
 });

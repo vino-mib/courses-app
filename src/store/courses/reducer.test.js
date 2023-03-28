@@ -28,7 +28,10 @@ describe('courses reducer', () => {
 	});
 
 	it('should handle SAVE_COURSE and return a new state', () => {
-		const newState = coursesReducer(undefined, { type: 'SAVE_COURSE', payload: newCourse });
+		const newState = coursesReducer(undefined, {
+			type: 'SAVE_COURSE',
+			payload: newCourse,
+		});
 		expect(newState).toEqual([newCourse]);
 	});
 });

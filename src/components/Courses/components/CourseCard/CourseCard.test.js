@@ -18,7 +18,7 @@ jest.mock('react-router-dom', () => ({
 	useNavigate: () => mockedUsedNavigate,
 }));
 
-const mockProps = {
+const mockedProps = {
 	key: 1,
 	id: '66cc289e-6de9-49b2-9ca7-8b4f',
 	title: 'Javascript',
@@ -40,33 +40,33 @@ describe('CourseCard', () => {
 	});
 
 	it('should render correctly', () => {
-		render(<CourseCard {...mockProps} />);
+		render(<CourseCard {...mockedProps} />);
 	});
 
 	it('should display title', async () => {
-		render(<CourseCard {...mockProps} />);
+		render(<CourseCard {...mockedProps} />);
 
 		const title = await screen.findByText('Javascript');
 		expect(title).toBeTruthy();
 	});
 
 	it('should display description', () => {
-		render(<CourseCard {...mockProps} />);
+		render(<CourseCard {...mockedProps} />);
 		expect(screen.getByText('description')).toBeInTheDocument();
 	});
 
 	it('should display duration in the correct format', () => {
-		render(<CourseCard {...mockProps} />);
+		render(<CourseCard {...mockedProps} />);
 		expect(screen.getByText('01:00')).toBeInTheDocument();
 	});
 
 	it('should display authors list', () => {
-		render(<CourseCard {...mockProps} />);
+		render(<CourseCard {...mockedProps} />);
 		expect(screen.getByText('author')).toBeInTheDocument();
 	});
 
 	it('should display created date in the correct format', () => {
-		render(<CourseCard {...mockProps} />);
+		render(<CourseCard {...mockedProps} />);
 		expect(screen.getByText('9.3.2021')).toBeInTheDocument();
 	});
 });
