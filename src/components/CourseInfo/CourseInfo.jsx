@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import formatCreationDate from '../../helpers/formatCreationDate';
+import formatDuration from '../../helpers/getCourseDuration';
 import useFetch from '../../helpers/useFetch';
 import getAuthorNames from '../../helpers/getAuthorNames';
-import { retrieveCourses, deleteCourse } from '../../store/courses/actions';
+import { fetchCourses, deleteCourse } from '../../store/courses/actions';
 import { retrieveAuthors } from '../../store/authors/actions';
 import Button from '../../common/Button/Button.jsx';
 
@@ -29,7 +30,7 @@ const Courses: React.FC<> = (props) => {
 			navigate('/login');
 		}
 		if (!courses.length) {
-			dispatch(retrieveCourses());
+			dispatch(fetchCourses());
 		}
 		if (!authors.length) {
 			dispatch(retrieveAuthors());
@@ -85,7 +86,7 @@ const Courses: React.FC<> = (props) => {
 								<b>ID:</b> {course?.id}
 							</div>
 							<div>
-								<b>Duration:</b> {course?.duration}
+								<b>Duration:</b> {formatDuration(course?.duration)}
 							</div>
 							<div>
 								<b>Created:</b> {formatCreationDate(course?.creationDate)}

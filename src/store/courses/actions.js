@@ -1,5 +1,5 @@
 import {
-	RETRIEVE_COURSES,
+	FETCH_COURSES,
 	DELETE_COURSE,
 	SAVE_COURSE,
 	UPDATE_COURSE,
@@ -8,7 +8,7 @@ import courseService from '../../courseService.js';
 
 // This function includes some async logic,
 // hence we can dispatch action manually
-export const retrieveCourses = () => {
+export const fetchCourses = () => {
 	// Thunk Function
 	return async (dispatch, getState) => {
 		// Fetching results from an API : asynchronous action
@@ -17,7 +17,7 @@ export const retrieveCourses = () => {
 		// action has completed.
 		if (result && result.successful) {
 			dispatch({
-				type: RETRIEVE_COURSES,
+				type: FETCH_COURSES,
 				payload: result.result,
 			});
 		}
@@ -101,7 +101,7 @@ export const filterCourses = (keyword) => {
 		// action has completed.
 		if (result && result.successful) {
 			dispatch({
-				type: RETRIEVE_COURSES,
+				type: FETCH_COURSES,
 				payload: result.result,
 			});
 		}

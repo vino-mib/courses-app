@@ -6,7 +6,7 @@ import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import { useAuth } from '../../helpers/auth';
 import { login, updateRole } from '../../store/user/actions';
-import { retrieveCourses } from '../../store/courses/actions';
+import { fetchCourses } from '../../store/courses/actions';
 import { retrieveAuthors } from '../../store/authors/actions';
 
 const Login: React.FC<> = () => {
@@ -24,6 +24,16 @@ const Login: React.FC<> = () => {
 	useEffect(() => {
 		if (user?.isAuth) {
 			navigate('/courses');
+		} else {
+			// when refresh the page
+			const token = localStorage.getItem('token');
+			if (token) {
+				dispatch(updateRole()).then(() => {
+					dispatch(fetchCourses());
+					dispatch(retrieveAuthors());
+					navigate('/courses');
+				});
+			}
 		}
 	}, []);
 
@@ -39,7 +49,7 @@ const Login: React.FC<> = () => {
 			dispatch(login(user))
 				.then(() => {
 					dispatch(updateRole());
-					dispatch(retrieveCourses());
+					dispatch(fetchCourses());
 					dispatch(retrieveAuthors());
 					navigate('/courses');
 					// window.location.reload();

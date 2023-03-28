@@ -1,6 +1,6 @@
 import {
 	SAVE_COURSE,
-	RETRIEVE_COURSES,
+	FETCH_COURSES,
 	UPDATE_COURSE,
 	DELETE_COURSE,
 } from './types.js';
@@ -15,7 +15,7 @@ export const coursesReducer = (state = coursesInitialState, action) => {
 		case SAVE_COURSE:
 			return [...state, payload];
 
-		case RETRIEVE_COURSES:
+		case FETCH_COURSES:
 			return payload;
 
 		case UPDATE_COURSE:

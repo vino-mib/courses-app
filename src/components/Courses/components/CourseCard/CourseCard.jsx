@@ -11,8 +11,7 @@ const CourseCard: React.FC<CourseProp> = (props) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state?.user);
-	const isAdmin = user.role === 'admin' ? true : false;
-	console.log(user);
+	const isAdmin = user?.role === 'admin' ? true : false;
 
 	const handleClick = () => {
 		navigate(`/courses/${props.id}`);

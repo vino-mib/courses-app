@@ -7,15 +7,13 @@ import getAuthorNames from '../../helpers/getAuthorNames';
 import useFetch from '../../helpers/useFetch';
 import { useNavigate } from 'react-router-dom';
 import { retrieveAuthors } from '../../store/authors/actions';
-import { filterCourses, retrieveCourses } from '../../store/courses/actions';
+import { filterCourses, fetchCourses } from '../../store/courses/actions';
 
 const Courses: React.FC<> = (props) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	//Selects the state value from the store.
-	const courses = useSelector((state) => state?.courses);
-	const authors = useSelector((state) => state?.authors);
-	const user = useSelector((state) => state?.user);
+	const { courses, authors, user } = useSelector((state) => state);
 	const isAdmin = user?.role === 'admin' ? true : false;
 
 	useEffect(() => {
@@ -25,10 +23,9 @@ const Courses: React.FC<> = (props) => {
 	}, []);
 
 	const handleSearch = (keyword) => {
-		console.log(keyword);
 		keyword.trim()
 			? dispatch(filterCourses(keyword))
-			: dispatch(retrieveCourses());
+			: dispatch(fetchCourses());
 	};
 
 	const createNewCourse = () => {
@@ -53,19 +50,20 @@ const Courses: React.FC<> = (props) => {
 			</div>
 			{courses && courses.length ? (
 				courses.map((course, index) => (
-					<CourseCard
-						key={index}
-						id={course.id}
-						title={course.title}
-						description={course.description}
-						creationDate={course.creationDate}
-						duration={course.duration}
-						authors={
-							authors && authors.length
-								? getAuthorNames(course.authors, authors)
-								: 'Loading...'
-						}
-					/>
+					<div data-testid='course-card' key={index}>
+						<CourseCard
+							id={course.id}
+							title={course.title}
+							description={course.description}
+							creationDate={course.creationDate}
+							duration={course.duration}
+							authors={
+								authors && authors.length
+									? getAuthorNames(course.authors, authors)
+									: 'Loading...'
+							}
+						/>
+					</div>
 				))
 			) : (
 				<label>No Courses</label>

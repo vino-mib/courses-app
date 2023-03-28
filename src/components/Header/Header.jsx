@@ -5,15 +5,13 @@ import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
 import { logout } from '../../store/user/actions';
 
-const Header: React.FC<HeaderProps> = (props) => {
-	const [token, setToken] = useState('');
+const Header: React.FC<> = () => {
 	const [error, setError] = useState('');
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const user = useSelector((state) => state?.user);
-	console.log(user);
 
 	const handleLogut = async () => {
 		dispatch(logout())

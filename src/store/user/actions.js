@@ -11,16 +11,17 @@ export const login = (user) => {
 		// Dispatching the action when async
 		// action has completed.
 		if (result && result.successful) {
+			const payload = {
+				isAuth: true,
+				name: result.user.name,
+				email: result.user.email,
+				token: result.result,
+			};
 			// store the token
 			localStorage.setItem('token', result.result);
 			dispatch({
 				type: LOGIN,
-				payload: {
-					isAuth: true,
-					name: result.user.name,
-					email: result.user.email,
-					token: result.result,
-				},
+				payload: payload,
 			});
 			return Promise.resolve();
 		}
@@ -62,12 +63,6 @@ export const logout = () => {
 			localStorage.removeItem('token');
 			dispatch({
 				type: LOGOUT,
-				payload: {
-					isAuth: false,
-					name: '',
-					email: '',
-					token: '',
-				},
 			});
 			return Promise.resolve();
 		}
@@ -80,6 +75,7 @@ export const updateRole = () => {
 	return async (dispatch, getState) => {
 		// Fetching results from an API : asynchronous action
 		const result = await userService.getRole();
+
 		console.log(result);
 		// Dispatching the action when async
 		// action has completed.
@@ -88,7 +84,31 @@ export const updateRole = () => {
 				type: UPDATE_ROLE,
 				payload: {
 					role: result.result.role,
+					isAuth: true,
+					name: result.result.name,
+					email: result.result.email,
+					token: localStorage.getItem('token'),
 				},
+			});
+			return Promise.resolve();
+		}
+		return Promise.reject(result);
+	};
+};
+
+export const syncStorageWithStore = () => {
+	// Thunk Function
+	return async (dispatch, getState) => {
+		// Fetching results from an API : asynchronous action
+		const result = await userService.getRole();
+		console.log(result);
+		// Dispatching the action when async
+		// action has completed.
+		if (result && result.successful) {
+			delete result.result.password;
+			dispatch({
+				type: UPDATE_ROLE,
+				payload: result.result,
 			});
 		}
 	};

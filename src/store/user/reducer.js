@@ -1,4 +1,5 @@
 import { LOGIN, REGISTER, LOGOUT, UPDATE_ROLE } from './types.js';
+import userService from './../../userService';
 
 export const userInitialState = {
 	isAuth: false,
@@ -20,10 +21,7 @@ export const userReducer = (state = userInitialState, action) => {
 			};
 
 		case LOGOUT:
-			return {
-				...state,
-				...payload,
-			};
+			return userInitialState;
 
 		case REGISTER:
 			return {
